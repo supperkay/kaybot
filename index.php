@@ -41,10 +41,13 @@ if (!is_null($events['events'])) {
                 case 'idcard':
                     $respMessage = '5845122451245';
                     break;
+                case 'i':
+                    $packageId = 1;
+                    $stickerId = 410;
+                    break;
                 default:
                     break;
-            }
-                   
+            }                  
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
 
