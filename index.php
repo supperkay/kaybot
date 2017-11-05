@@ -45,8 +45,7 @@ if (!is_null($events['events'])) {
                     $respMessage = 'Hello !!!!';
                     break;
                 default:
-                    $packageId = 1;
-                    $stickerId = 1;
+                    $respMessage = 'Sorry sir...';
                     break;
             }                  
             $httpClient = new CurlHTTPClient($channel_token);
