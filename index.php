@@ -43,7 +43,7 @@ if (!is_null($events['events'])) {
                     break;
                 case 'i':
                     $packageId = 1;
-                    $stickerId = 410;
+                    $stickerId = 1;
                     break;
                 default:
                     break;
