@@ -42,10 +42,11 @@ if (!is_null($events['events'])) {
                     $respMessage = '5845122451245';
                     break;
                 case 'i':
-                    $packageId = 1;
-                    $stickerId = 1;
+                    $respMessage = 'Hello !!!!';
                     break;
                 default:
+                    $packageId = 1;
+                    $stickerId = 1;
                     break;
             }                  
             $httpClient = new CurlHTTPClient($channel_token);
