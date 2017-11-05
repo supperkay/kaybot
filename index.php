@@ -1,4 +1,7 @@
 <?php
+/**
+ * Use for return easy answer.
+ */
 
 require_once('./vendor/autoload.php');
 
@@ -24,31 +27,30 @@ if (!is_null($events['events'])) {
             // Get replyToken
             $replyToken = $event['replyToken'];
 
-            $host = 'ec2-184-73-247-240.compute-1.amazonaws.com';
-            $dbname = 'd4mud3p0dor7f7';
-            $user = 'tovcgvofemgthd';
-            $pass = '6a0fcc3d6d520632627446b07d5b296f2ee1417b4677fe13838a7a764596bf0e';
-            $connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
-            
-            $params = array(
-                'log' => $event['message']['text'],
-            );
-
-            $statement = $connection->prepare("INSERT INTO logs (log) VALUES (:log)");
-            $result = $statement->execute($params);
-
-            if($result){
-                $respMessage = 'Log:'.$event['message']['text'].' Success';
-            }else{
-                $respMessage = 'Log:'.$event['message']['text'].' Fail';
+            switch($event['message']['text']) {
+                
+                case 'tel':
+                    $respMessage = '089-5124512';
+                    break;
+                case 'address':
+                    $respMessage = '99/451 Muang Nonthaburi';
+                    break;
+                case 'boss':
+                    $respMessage = '089-2541545';
+                    break;
+                case 'idcard':
+                    $respMessage = '5845122451245';
+                    break;
+                default:
+                    break;
             }
-            
+
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
 
             $textMessageBuilder = new TextMessageBuilder($respMessage);
             $response = $bot->replyMessage($replyToken, $textMessageBuilder);
- 
+
 		}
 	}
 }
