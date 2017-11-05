@@ -54,7 +54,21 @@ if (!is_null($events['events'])) {
             $textMessageBuilder = new TextMessageBuilder($respMessage);
             $response = $bot->replyMessage($replyToken, $textMessageBuilder);
 
-		}
+        }
+        
+            // Get replyToken
+            $replyToken = $event['replyToken'];
+
+            // Sticker
+            $packageId = 1;
+            $stickerId = 1;
+
+            $httpClient = new CurlHTTPClient($channel_token);
+            $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
+
+            $textMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
+            $response = $bot->replyMessage($replyToken, $textMessageBuilder);
+
 	}
 }
 
