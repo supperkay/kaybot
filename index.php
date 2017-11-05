@@ -1,4 +1,37 @@
 <?php
+
+//Select Postgresql 
+$host = 'ec2-184-73-247-240.compute-1.amazonaws.com';
+$dbname = 'd4mud3p0dor7f7';
+$user = 'tovcgvofemgthd';
+$pass = '6a0fcc3d6d520632627446b07d5b296f2ee1417b4677fe13838a7a764596bf0e';
+$connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass);
+$result = $connection->query("SELECT * FROM polls");
+if($result !== null) {
+echo $result->rowCount();
+}
+
+//Insert Postgresql
+$params = array(
+'user_id' => $event['source']['userId'] ,
+'slip_date' => date('Y-m-d'),
+'name' => $event['message']['text'],
+);
+$statement = $connection->prepare('INSERT INTO slips (user_id, slip_date, name) VALUES (:user_id,
+:slip_date, :name)');
+$statement->execute($params);
+
+//Update Postgresql
+$params = array(
+'name' => $event['message']['text'],
+'slip_date' => date('Y-m-d'),
+'user_id' => $event['source']['userId'],
+);
+$statement = $connection->prepare('UPDATE slips SET name=:name WHERE slip_date=:slip_date AND
+user_id=:user_id');
+$statement->execute($params);
+
+
 require_once('./vendor/autoload.php');
 
 //Namespace
