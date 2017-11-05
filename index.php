@@ -44,32 +44,7 @@ if (!is_null($events['events'])) {
                 default:
                     break;
             }
-
-                    // Split message then keep it in database. 
-                    $appointments = explode(',', $event['message']['text']);
-
-                    if(count($appointments) == 2) {
-
-                        $host = 'ec2-174-129-223-193.compute-1.amazonaws.com';
-                        $dbname = 'd74bjtc28mea5m';
-                        $user = 'eozuwfnzmgflmu';
-                        $pass = '2340614a293db8e8a8c02753cd5932cdee45ab90bfcc19d0d306754984cbece1';
-                        $connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
-                        
-                        $params = array(
-                            'time' => $appointments[0],
-                            'content' => $appointments[1],
-                        );
-            
-                        $statement = $connection->prepare("INSERT INTO appointments (time, content) VALUES (:time, :content)");
-                        $result = $statement->execute($params);
-            
-                        $respMessage = 'Your appointment has saved.';
-                    }else{
-                        $respMessage = 'You can send appointment like this "12.00,House keeping." ';
-                    }
-
-
+                   
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
 
