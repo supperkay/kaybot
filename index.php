@@ -32,9 +32,11 @@ if (!is_null($events['events'])) {
             
             $params = array(
                 'log' => $event['message']['text'],
+                'date' => date('Y-m-d'),
+                'time' => time('H:i:s'),
             );
 
-            $statement = $connection->prepare("INSERT INTO logs (log) VALUES (:log)");
+            $statement = $connection->prepare("INSERT INTO logs (log,date,time) VALUES (:log, :date, :time)");
             $result = $statement->execute($params);
 
             if($result){
