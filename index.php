@@ -1,6 +1,7 @@
 <?php
 
 require_once('./vendor/autoload.php');
+date_default_timezone_set('Asia/Bangkok');
 
 use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use \LINE\LINEBot;
