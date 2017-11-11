@@ -31,7 +31,7 @@ if (!is_null($events['events'])) {
 
                 $host = 'ec2-184-73-247-240.compute-1.amazonaws.com';
                 $dbname = 'd4mud3p0dor7f7';
-                $user = 'eozuwfnzmgflmu';
+                $user = 'tovcgvofemgthd';
                 $pass = '6a0fcc3d6d520632627446b07d5b296f2ee1417b4677fe13838a7a764596bf0e';
                 $connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
                 
