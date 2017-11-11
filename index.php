@@ -1,8 +1,5 @@
 <?php
-/**
- * Use for return easy answer.
- */
-
+ 
 require_once('./vendor/autoload.php');
 
 use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -27,48 +24,135 @@ if (!is_null($events['events'])) {
             // Get replyToken
             $replyToken = $event['replyToken'];
 
-            switch($event['message']['text']) {
+            try {
+                // Check to see user already answer
+                $host = 'ec2-184-73-247-240.compute-1.amazonaws.com';
+                $dbname = 'd4mud3p0dor7f7';
+                $user = 'tovcgvofemgthd';
+                $pass = '6a0fcc3d6d520632627446b07d5b296f2ee1417b4677fe13838a7a764596bf0e';
+                $connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
                 
-                case 'tel':
-                    $respMessage = '089-5124512';
-                    break;
-                case 'address':
-                    $respMessage = '99/451 Muang Nonthaburi';
-                    break;
-                case 'boss':
-                    $respMessage = '089-2541545';
-                    break;
-                case 'idcard':
-                    $respMessage = '5845122451245';
-                    break;
-                case 'i':
-                    $respMessage = 'Hello !!!!';
-                    break;
-                default:
-                    $respMessage = 'Sorry sir...';
-                    break;
-            }                  
-            $httpClient = new CurlHTTPClient($channel_token);
-            $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
+                $sql = sprintf("SELECT * FROM poll WHERE user_id='%s' ", $event['source']['userId']);
+                $result = $connection->query($sql);
 
-            $textMessageBuilder = new TextMessageBuilder($respMessage);
-            $response = $bot->replyMessage($replyToken, $textMessageBuilder);
+                error_log($sql);
 
-        }
-        
-            // Get replyToken
-            $replyToken = $event['replyToken'];
+                if($result == false || $result->rowCount() <=0) {
+    
+                    switch($event['message']['text']) {
+                        
+                        case '1':
+                            // Insert
+                            $params = array(
+                                'userID' => $event['source']['userId'],
+                                'answer' => '1',
+                            );
+                            
+                            $statement = $connection->prepare('INSERT INTO poll ( user_id, answer ) VALUES ( :userID, :answer )');
+                            $statement->execute($params);
 
-            // Sticker
-            $packageId = 1;
-            $stickerId = 1;
+                            // Query
+                            $sql = sprintf("SELECT * FROM poll WHERE answer='1' AND  user_id='%s' ", $event['source']['userId']);
+                            $result = $connection->query($sql);
+                             
+                            $amount = 1;
+                            if($result){
+                                $amount = $result->rowCount();
+                            }
+                            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$amount;
 
-            $httpClient = new CurlHTTPClient($channel_token);
-            $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
+                            break;
+                        
+                        case '2':
+                            // Insert
+                            $params = array(
+                                'userID' => $event['source']['userId'],
+                                'answer' => '2',
+                            );
+                            
+                            $statement = $connection->prepare('INSERT INTO poll ( user_id, answer ) VALUES ( :userID, :answer )');
+                            $statement->execute($params);
 
-            $textMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
-            $response = $bot->replyMessage($replyToken, $textMessageBuilder);
+                            // Query
+                            $sql = sprintf("SELECT * FROM poll WHERE answer='2' AND  user_id='%s' ", $event['source']['userId']);
+                            $result = $connection->query($sql);
 
+                            $amount = 1;
+                            if($result){
+                                $amount = $result->rowCount();
+                            }
+                            $respMessage = 'จำนวนคนตอบว่าแฟน = '.$amount;
+
+                            break;
+                        
+                        case '3':
+                            // Insert
+                            $params = array(
+                                'userID' => $event['source']['userId'],
+                                'answer' => '3',
+                            );
+                            
+                            $statement = $connection->prepare('INSERT INTO poll ( user_id, answer ) VALUES ( :userID, :answer )');
+                            $statement->execute($params);
+
+                            // Query
+                            $sql = sprintf("SELECT * FROM poll WHERE answer='3' AND  user_id='%s' ", $event['source']['userId']);
+                            $result = $connection->query($sql);
+
+                            $amount = 1;
+                            if($result){
+                                $amount = $result->rowCount();
+                            }
+                            $respMessage = 'จำนวนคนตอบว่าพ่อแม่ = '.$amount;
+    
+                            break;
+                        case '4':
+                            // Insert
+                            $params = array(
+                                'userID' => $event['source']['userId'],
+                                'answer' => '4',
+                            );
+                            
+                            $statement = $connection->prepare('INSERT INTO poll ( user_id, answer ) VALUES ( :userID, :answer )');
+                            $statement->execute($params);
+
+                            // Query
+                            $sql = sprintf("SELECT * FROM poll WHERE answer='4' AND  user_id='%s' ", $event['source']['userId']);
+                            $result = $connection->query($sql);
+
+                            $amount = 1;
+                            if($result){
+                                $amount = $result->rowCount();
+                            }
+                            $respMessage = 'จำนวนคนตอบว่าบุคคลอื่นๆ = '.$amount;
+
+                            break;
+                        default:
+                            $respMessage = "
+                                บุคคลที่โทรหาบ่อยที่สุด คือ? \n\r
+                                กด 1 เพื่อน \n\r
+                                กด 2 แฟน \n\r
+                                กด 3 พ่อแม่ \n\r
+                                กด 4 บุคคลอื่นๆ \n\r
+                            ";
+                            break;
+                    }
+    
+                } else {
+                    $respMessage = 'คุณได้ตอบโพลล์นี้แล้ว';
+                }
+    
+                $httpClient = new CurlHTTPClient($channel_token);
+                $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
+    
+                $textMessageBuilder = new TextMessageBuilder($respMessage);
+                $response = $bot->replyMessage($replyToken, $textMessageBuilder);
+
+            } catch(Exception $e) {
+                error_log($e->getMessage());
+            }
+
+		}
 	}
 }
 
