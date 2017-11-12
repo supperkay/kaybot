@@ -42,10 +42,10 @@ if (!is_null($events['events'])) {
             error_log($sql);
         
             foreach($connection->query($sql) as $row){
-                $ans=$row['answer'];
+                $ans=$row['answer']."-id:".$row['id'];
             }
 
-            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$ans;
+            $respMessage =.$ans;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
