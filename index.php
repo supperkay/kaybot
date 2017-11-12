@@ -36,17 +36,16 @@ if (!is_null($events['events'])) {
 
             );
             // Query
-            $sql = sprintf("SELECT answer FROM bots WHERE get='Hi'");
-            $result = $connection->query($sql);
+            $sql = sprintf("SELECT * FROM bots WHERE get='Hi'");
+            //$result = $connection->query($sql);
            
             error_log($sql);
-            error_log($result);
 
-            //$amount = 1;
-            if($result){
-                $amount = $result->answer;
+            foreach($connection->query($sql) as $row){
+                $ans=$row('answer');
             }
-            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$amount;
+
+            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$ans;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
