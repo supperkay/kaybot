@@ -36,7 +36,7 @@ if (!is_null($events['events'])) {
 
             );
             // Query
-            $sql = sprintf("SELECT answer FROM bots WHERE get=:get");
+            $sql = sprintf("SELECT answer FROM bots WHERE get='Hi'");
             $result = $connection->query($sql);
            
             error_log($sql);
