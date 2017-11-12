@@ -43,7 +43,7 @@ if (!is_null($events['events'])) {
             if($result){
                 $amount = $result->rowCount();
             }
-            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$amount;
+            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$result;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
