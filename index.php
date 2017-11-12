@@ -18,8 +18,8 @@ if (!is_null($events['events'])) {
     // Get replyToken
     $replyToken = $event['replyToken'];
     // Sticker
-    $packageId = 2351;
-    $stickerId = 78182;
+    $packageId = 2;
+    $stickerId = 41;
     $httpClient = new CurlHTTPClient($channel_token);
     $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
     $textMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
