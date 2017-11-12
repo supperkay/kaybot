@@ -43,7 +43,7 @@ if (!is_null($events['events'])) {
         
             foreach($connection->query($sql) as $row){
                 switch($row['answer']){
-                    case 's1'
+                    case 's1':
                         $packageId = 1;
                         $stickerId = 410;
                     break;
