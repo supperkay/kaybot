@@ -40,9 +40,9 @@ if (!is_null($events['events'])) {
             //$result = $connection->query($sql);
            
             error_log($sql);
-
+        
             foreach($connection->query($sql) as $row){
-                $ans=$row('answer');
+                $ans=$row['answer'];
             }
 
             $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$ans;
