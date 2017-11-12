@@ -45,7 +45,7 @@ if (!is_null($events['events'])) {
                 switch($row['answer']){
                     case 's1':
                         $packageId = 1;
-                        $stickerId = 410;
+                        $stickerId = 1;
                     break;
                     default:
                         $respMessage=$row['answer']."-id:".$row['id'];
