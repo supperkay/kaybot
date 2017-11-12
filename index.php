@@ -46,9 +46,9 @@ if (!is_null($events['events'])) {
                 switch($row['answer']){
                     case 'stk':
                         $stickersend=explode(':',$row['sticker']);
-                        $respMessage=$stickersend[0]." and ".$stickersend[0];
-                        //$packageId = (int)$stickersend[0];
-                        //$stickerId = (int)$stickersend[1];
+                        //$respMessage=$stickersend[0]." and ".$stickersend[0];
+                        $packageId = $stickersend[0];
+                        $stickerId = $stickersend[1];
                     break;
                     default:
                         $respMessage=$row['answer']."-id:".$row['id'];
@@ -58,12 +58,14 @@ if (!is_null($events['events'])) {
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
+
             if($row['answer']=='stk'){
-                //$textMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
-                $textMessageBuilder = new TextMessageBuilder($respMessage);
+                $textMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
+                //$textMessageBuilder = new TextMessageBuilder($respMessage);
             }else{
                 $textMessageBuilder = new TextMessageBuilder($respMessage);
             }
+
             $response = $bot->replyMessage($replyToken, $textMessageBuilder);
  
 		}
