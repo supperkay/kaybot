@@ -42,11 +42,11 @@ if (!is_null($events['events'])) {
             error_log($sql);
             error_log($result);
 
-            $amount = 1;
+            //$amount = 1;
             if($result){
-                $amount = $result->rowCount();
+                $amount = $result->fetchAll();
             }
-            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$result;
+            $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$amount;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
