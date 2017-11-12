@@ -44,7 +44,7 @@ if (!is_null($events['events'])) {
 
             //$amount = 1;
             if($result){
-                $amount = $result->fetchAll();
+                $amount = $result->answer;
             }
             $respMessage = 'จำนวนคนตอบว่าเพื่อน = '.$amount;
             
