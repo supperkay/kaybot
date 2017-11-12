@@ -45,8 +45,7 @@ if (!is_null($events['events'])) {
             foreach($connection->query($sql) as $row){
                 switch($row['answer']){
                     case 'stk':
-                        $stickersend=explode(',',$row['sticker'])
-                        //$intpackageid=(int)$stickersend[0];
+                        $stickersend=explode(':',$row['sticker']);
                         $packageId = (int)$stickersend[0];
                         $stickerId = (int)$stickersend[1];
                     break;
