@@ -36,14 +36,14 @@ if (!is_null($events['events'])) {
 
             );
             // Query
-            $sql = sprintf("SELECT answer FROM bots WHERE get=:get);
+            $sql = sprintf("SELECT answer FROM bots WHERE get=:get'");
             $result = $connection->query($sql);
 
-            $amount = 1;
+            //$amount = 1;
             if($result){
-            $amount = $result->rowCount();
+                $respMessage = $result;
             }
-            $respMessage = .$amount;
+            //$respMessage = $amount;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
