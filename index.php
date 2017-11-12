@@ -57,7 +57,7 @@ if (!is_null($events['events'])) {
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
-            if($row['answer']=='s1'){
+            if($row['answer']=='stk'){
                 $textMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
             }else{
                 $textMessageBuilder = new TextMessageBuilder($respMessage);
