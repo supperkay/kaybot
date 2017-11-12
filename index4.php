@@ -32,18 +32,19 @@ if (!is_null($events['events'])) {
             $connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
             
             $params = array(
-                'get' => $event['message']['text'],
-
+                'log' => $event['message']['text'],
+                'date' => date('Y-m-d'),
+                'time' => date('H:i:s'),
             );
-            // Query
-            $sql = sprintf("SELECT answer FROM bots WHERE get=:get);
-            $result = $connection->query($sql);
 
-            $amount = 1;
+            $statement = $connection->prepare("INSERT INTO logs (log,date,time) VALUES (:log, :date, :time)");
+            $result = $statement->execute($params);
+
             if($result){
-            $amount = $result->rowCount();
+                $respMessage = 'Log:'.$event['message']['text'].' Success';
+            }else{
+                $respMessage = 'Log:'.$event['message']['text'].' Fail';
             }
-            $respMessage = .$amount;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
