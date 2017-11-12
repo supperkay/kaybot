@@ -38,6 +38,9 @@ if (!is_null($events['events'])) {
             // Query
             $sql = sprintf("SELECT answer FROM bots WHERE get=:get'");
             $result = $connection->query($sql);
+           
+            error_log($sql);
+            error_log($result);
 
             $amount = 1;
             if($result){
