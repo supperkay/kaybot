@@ -42,10 +42,16 @@ if (!is_null($events['events'])) {
             error_log($sql);
         
             foreach($connection->query($sql) as $row){
-                $respMessage=$row['answer']."-id:".$row['id'];
+                switch($row['answer']){
+                    case 's1'
+                        $packageId = 1;
+                        $stickerId = 410;
+                    break;
+                    default:
+                        $respMessage=$row['answer']."-id:".$row['id'];
+                     break;
+                }
             }
-
-            //$respMessage =.$ans;
             
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
